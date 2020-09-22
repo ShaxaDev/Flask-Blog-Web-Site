@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for post in posts %}
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ url_for('static',filename='images/' + post.author.img_file) }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{{ url_for('user',username=post.author.username) }}">{{ post.author.username }}</a>
+            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <h2 class='article-title'><a class="article-title" href="{{ url_for('post',post_id=post.id) }}">{{ post.title }}
+                &nbsp;<i class="fa fa-newspaper-o" style="color:black" aria-hidden="true"></i></a></h2>
+        <p class="article-content">{{ post.content[0:300] }}&nbsp;<a href="{{ url_for('post',post_id=post.id) }}">view
+                all</a></p>
+        {% if current_user.is_authenticated %}
+        {% if current_user.has_liked_post(post) %}
+        <a class='' href="{{ url_for('like_action', post_id=post.id, action='unlike') }}"><i class="fa fa-heart fa-lg"
+                aria-hidden="true" style="color:red"></i></a>
+        {% else %}
+        <a class='' href="{{ url_for('like_action', post_id=post.id, action='like') }}"><i class="fa fa-heart-o fa-lg "
+                aria-hidden="true" style="color:red"></i></a>
+        {% endif %}
+        &nbsp;<b>{{ post.likes.count() }} &nbsp;Likes</b>
+        {% else %}
+        <b><i class="fa fa-heart fa-lg" aria-hidden="true" style="color:red"></i>&nbsp;{{ post.likes.count() }}</b>
+        {% endif %}
+
+    </div>
+
+
+</article>
+
+
+{% endfor %}
+
+
+{% endblock %}

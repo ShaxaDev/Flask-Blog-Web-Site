@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form class="form-inline" action="/searchmember" method="POST">
+    <div class="form-group mb-2">
+        <label for="staticEmail2" class="sr-only">Email</label>
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="P/S:ShaxaDev">
+    </div>
+
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="inputPassword2" class="sr-only"></label>
+        <input type="text"  class="form-control" id="inputPassword2" name='sasa' placeholder="username">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Search</button>
+</form>
+
+<hr width="75%">
+
+{% for i in user.items %}
+
+    <div class="content-section">
+      
+        <div class="media">
+            <img class="rounded-circle  article-img" src='static/images/{{ i.img_file }}'>
+            <div class='media-body' >
+                <h2 class='account_heading'>{{ i.username }}</h2>
+                <p class='text-secondary'><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;{{ i.email }}</p>
+            </div>
+           
+        </div>
+</div>
+{% endfor %}
+{% for page_num in user.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+
+{% if page_num %}
+{% if user.page==page_num %}
+<a class="btn btn-info mb-4" href="{{ url_for('member',page=page_num) }}">{{ page_num }}</a>
+{% else %}
+<a class="btn btn-outline-info mb-4" href="{{ url_for('member',page=page_num) }}">{{ page_num }}</a>
+{% endif %}
+{% else %}
+{% endif %}
+{% endfor %}
+{% endblock %}
+    
