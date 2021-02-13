@@ -1,2 +1,2 @@
 # Instagramclone-flask
-Flask va sqlalchemy
+Flask va sqlalchemy yordamida yaratilgan blog site
